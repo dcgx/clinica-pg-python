@@ -14,11 +14,11 @@ def mostrar_menu():
         print("0. Salir")
         opcion = int(input("Seleccione una opción: "))
         if opcion == 1:
+            print("Seleccionaste: Ingresar un nuevo paciente")
             ingresar_paciente()
-            # Lógica para ingresar un nuevo paciente
         elif opcion == 2:
             print("Seleccionaste: Asignar paciente a médico")
-            # Lógica para asignar paciente a médico
+            asignar_paciente_a_medico()
         elif opcion == 3:
             print("Seleccionaste: Ordenar examen para un paciente")
             # Lógica para ordenar examen para un paciente

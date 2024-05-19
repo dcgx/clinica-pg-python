@@ -1,7 +1,7 @@
 #Para que funcionen se deben importar los objetos asignados a cada funcion
 
 #Se crea la funcion Ingresar Paciente
-from db.operations import create_paciente, get_paciente_by_rut
+from db.operations import update_paciente, create_paciente, get_medico_by_name, get_paciente_by_rut
 from models.paciente import Paciente
 
 def ingresar_paciente():
@@ -19,7 +19,23 @@ def ingresar_paciente():
 
 
 #Se crea la funcion Asignar paciente a Medico
-#PENDIENTE
+def asignar_paciente_a_medico():
+    print("Asignar paciente a médico")
+    rut = input("Ingrese el rut del paciente: ")
+    paciente = get_paciente_by_rut(rut)
+    if paciente is None:
+        print("❌ El paciente no existe en la base de datos. ")
+        return
+    
+    medico = input("Ingrese el nombre del médico: ")
+    medico_encontrado = get_medico_by_name(medico)
+    if medico_encontrado is None:
+        print("❌ El médico no existe en la base de datos")
+        return
+    paciente.set_medico_id(medico_encontrado.get_id())
+    update_paciente(paciente)
+    print("✅ Paciente asignado a médico correctamente:", paciente.show())
+    return paciente
 
 #Se crea la funcion Ordenar examen a paciente
 #PENDIENTE
@@ -40,5 +56,3 @@ def listar_pacientes(lista_pacientes):
         print(f"Diagnostico: {paciente.diagnostico}")
         print(f"Medico: {paciente.medico}")
         print(f"Habitacion: {paciente.habitacion}")
-
-listar_pacientes()        

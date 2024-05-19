@@ -4,6 +4,7 @@ from db import config
 
 from db.connection import get_connection
 
+from models.medico import Medico
 from models.paciente import Paciente
 
 def create_paciente(paciente):
@@ -12,6 +13,16 @@ def create_paciente(paciente):
             cursor.execute(
                 "INSERT INTO pacientes (nombre, rut, medico_id) VALUES (%s, %s, %s)",
                 (paciente.get_nombre(), paciente.get_rut(), None)  # Llama a los métodos
+            )
+            conn.commit()
+    return paciente
+
+def update_paciente(paciente):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "UPDATE pacientes SET nombre = %s, medico_id = %s WHERE rut = %s",
+                (paciente.get_nombre(), paciente.get_medico_id(), paciente.get_rut())
             )
             conn.commit()
     return paciente
@@ -25,9 +36,24 @@ def get_paciente_by_rut(rut):
             )
             paciente = cursor.fetchone()
     if paciente is not None:
-        return Paciente(paciente[1], paciente[2])
+        return Paciente(paciente[1], paciente[2], paciente[3])
     else:
         return None    
+
+def get_medico_by_name(nombre_medico):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM medicos WHERE nombre = %s",
+                (nombre_medico,)
+            )
+            medico = cursor.fetchone()
+    if medico is not None:
+        print(str(medico))
+        return Medico(medico[0], medico[1], medico[2])
+    else:
+        return None
+
 
 def ShowAllBook():
     #establecemos la conexion
