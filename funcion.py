@@ -7,13 +7,29 @@ from models.paciente import Paciente
 def ingresar_paciente():
     print("Ingrese los datos del paciente:")
     nombre = input("Nombre: ")
-    rut = input("Número de Rut: ")
-    paciente_found = get_paciente_by_rut(rut)
-    if paciente_found is not None:
+    rut = input("Rut: ")
+
+    paciente_por_rut = get_paciente_by_rut(rut)
+    if paciente_por_rut is not None:
         print("❌ El paciente ya existe en la base de datos")
-        return paciente_found
+        return paciente_por_rut
     paciente = Paciente('',nombre,rut)
-    create_paciente(paciente)
+    paciente = create_paciente(paciente)
+
+    cama_id = input("ID Cama a asignar: ")
+    cama = get_cama_by_id(cama_id)
+    if cama is None:
+        print("❌ La cama no existe en la base de datos")
+    else:
+        print(str(paciente))
+        print(paciente.get_id())
+        cama.set_paciente_id(paciente.get_id())
+        update_cama(cama)
+        print("✅ Cama asignada correctamente:", cama.show())
+        print("HABITACION ID: ", cama.get_habitacion_id())  
+        habitacion = get_habitacion_by_id(cama.get_habitacion_id())
+        print("🛏️ Habitación Nro.: ", habitacion.get_numero())
+
     print("✅ Paciente ingresado correctamente:", paciente.show())
     return paciente
 
@@ -102,7 +118,7 @@ def cambiar_paciente_de_cama():
     print("✅ Paciente se ha cambiado de cama correctamente:", paciente.show())
     return paciente
 
-def diagnosticar_enfermedad_a_paciente():
+def asignar_diagnostico_a_paciente():
     print("Diagnosticar enfermedad a un paciente")
     rut = input("Ingrese el rut del paciente: ")
     paciente = get_paciente_by_rut(rut)
@@ -126,6 +142,7 @@ def listar_pacientes():
     for paciente in pacientes:
         medico = get_medico_by_id(paciente.get_medico_id())
         medico_name = medico.get_nombre() if medico is not None else "Sin médico asignado"
+        print(f"ID: {paciente.get_id()}")
         print(f"Nombre: {paciente.get_nombre()}")
         print(f"Rut: {paciente.get_rut()}")
         print(f"Medico: {medico_name}")

@@ -11,7 +11,7 @@ from models.habitacion import Habitacion
 from models.medico import Medico
 from models.paciente import Paciente
 
-def create_paciente(paciente):
+def create_paciente(paciente) -> Paciente:
     with get_connection() as conn:
         with conn.cursor() as cursor:
             cursor.execute(
@@ -19,6 +19,12 @@ def create_paciente(paciente):
                 (paciente.get_nombre(), paciente.get_rut(), None)  # Llama a los métodos
             )
             conn.commit()
+
+            cursor.execute(
+                "SELECT * FROM pacientes WHERE rut = %s",
+                (paciente.get_rut(),)
+            )
+            paciente = Paciente(cursor.fetchone()[0], paciente.get_nombre(), paciente.get_rut(), None)
     return paciente
 
 def update_paciente(paciente):
@@ -131,6 +137,17 @@ def create_habitacion(habitacion: Habitacion):
             conn.commit()
     return habitacion
 
+def get_habitacion_by_id(habitacion_id):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM habitaciones WHERE habitacion_id = %s",
+                (habitacion_id,)
+            )
+            habitacion = cursor.fetchone()
+    if habitacion is not None:
+        return Habitacion(habitacion[0], habitacion[1])
+
 def get_habitacion_by_paciente_id(paciente_id):
     cama = get_cama_by_paciente_id(paciente_id)
     with get_connection() as conn:
@@ -153,6 +170,17 @@ def create_cama(cama: Cama):
             conn.commit()
     return cama
 
+def get_cama_by_id(cama_id):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM camas WHERE cama_id = %s",
+                (cama_id,)
+            )
+            cama = cursor.fetchone()
+    if cama is not None:
+        return Cama(cama[0], cama[1], cama[2], cama[3])
+
 def get_cama_by_paciente_id(paciente_id):
     with get_connection() as conn:
         with conn.cursor() as cursor:
@@ -163,6 +191,17 @@ def get_cama_by_paciente_id(paciente_id):
             cama = cursor.fetchone()
     if cama is not None:
         return Cama(cama[0], cama[1], cama[2], cama[3])
+
+def update_cama(cama: Cama):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "UPDATE camas SET paciente_id = %s WHERE cama_id = %s",
+                (cama.get_paciente_id(), cama.get_id())
+            )
+            conn.commit()
+    return cama
+
 
 def create_examen(examen: Examen):
     examen_id = None
