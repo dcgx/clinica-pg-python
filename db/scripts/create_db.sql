@@ -27,14 +27,16 @@ CREATE TABLE diagnosticos (
     enfermedad VARCHAR(100) NOT NULL
 );
 
+DROP TABLE IF EXISTS habitaciones CASCADE;
 CREATE TABLE habitaciones (
     habitacion_id SERIAL PRIMARY KEY,
-    paciente_id INT REFERENCES pacientes(paciente_id),
     numero INT NOT NULL
 );
 
+DROP TABLE IF EXISTS camas CASCADE;
 CREATE TABLE camas (
     cama_id SERIAL PRIMARY KEY,
     habitacion_id INT REFERENCES habitaciones(habitacion_id),
+    paciente_id INT REFERENCES pacientes(paciente_id),
     habilitada BOOLEAN NOT NULL DEFAULT FALSE
 );

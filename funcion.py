@@ -24,9 +24,7 @@ def mostrar_paciente():
     if paciente is None:
         print("❌ El paciente no existe en la base de datos. ")
         return
-    # print("✅ Paciente encontrado:", paciente.show())
-    #debe mostrar rut, nombre, diagnostico, medico tratante, último examen realizado, habitación y cama en la
-    #que se encuentra
+
     print("Nombre: ", paciente.get_nombre())
     print("Rut: ", paciente.get_rut())
     medico = get_medico_by_id(paciente.get_medico_id())
@@ -37,11 +35,16 @@ def mostrar_paciente():
     diagnostico = get_diagnostico_by_examen_id(last_examen.get_id())
     diagnostico_nombre = diagnostico.get_enfermedad() if diagnostico is not None else "Sin diagnostico asignado"
 
+    cama = get_cama_by_paciente_id(paciente.get_id())
+    cama_id = cama.get_id() if cama is not None else "Sin cama asignada"
+    habitacion = get_habitacion_by_paciente_id(paciente.get_id())
+    habitacion_numero = habitacion.get_numero() if habitacion is not None else "Sin habitación asignada" 
+
     print("Medico: ", medico_nombre)
     print("Diagnostico: ", diagnostico_nombre)
     print("Ultimo examen: ", last_examen_resultado)
-    print("Numero de Habitación: ", paciente.get_habitacion())
-    print("Cama: ", paciente.get_cama())
+    print("Numero de Habitación: ", habitacion_numero)
+    print("Cama: ", cama_id)
     
     return paciente
 

@@ -1,5 +1,5 @@
 class Cama:
-    def __init__(self,id='',habilitada='',paciente_id=None,habitacion_id=None):
+    def __init__(self,id='',paciente_id=None,habitacion_id=None,habilitada=False):
         self.__id = id
         self.__habilitada = habilitada
         self.__paciente_id = paciente_id

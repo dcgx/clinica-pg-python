@@ -35,12 +35,12 @@ INSERT INTO habitaciones (numero) VALUES (104);
 
 -- Camas
 INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (1, TRUE, 1);
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (1, TRUE, '');
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (2, TRUE, '');
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (2, FALSE, '');
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (2, FALSE, '');
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (3, TRUE, '');
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (3, TRUE, '');
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (3, TRUE, '');
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (4, FALSE, '');
-INSERT INTO camas (habitacion_id, habilitada, paciente_id) VALUES (4, TRUE, 1);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (1, TRUE);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (2, TRUE);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (2, FALSE);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (2, FALSE);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (3, TRUE);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (3, TRUE);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (3, TRUE);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (4, FALSE);
+INSERT INTO camas (habitacion_id, habilitada) VALUES (4, TRUE);

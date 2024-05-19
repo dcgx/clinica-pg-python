@@ -75,7 +75,6 @@ def get_medico_by_name(nombre_medico):
             )
             medico = cursor.fetchone()
     if medico is not None:
-        print(str(medico))
         return Medico(medico[0], medico[1], medico[2])
     else:
         return None
@@ -123,7 +122,7 @@ def get_habitacion_by_paciente_id(paciente_id):
             )
             habitacion = cursor.fetchone()
     if habitacion is not None:
-        return Habitacion(habitacion[0], habitacion[1], habitacion[2])
+        return Habitacion(habitacion[0], habitacion[1])
     
 def get_cama_by_paciente_id(paciente_id):
     with get_connection() as conn:
