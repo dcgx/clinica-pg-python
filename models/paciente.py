@@ -1,9 +1,12 @@
 class Paciente:
-    def __init__(self,nombre='',rut='', medico_id=None):
+    def __init__(self,id='',nombre='',rut='', medico_id=None):
+        self.__id = id
         self.__nombre = nombre
         self.__rut = rut
         self.__medico_id = medico_id
 
+    def get_id(self):
+        return self.__id
     def get_nombre(self):
         return self.__nombre
     def get_rut(self):
@@ -11,6 +14,8 @@ class Paciente:
     def get_medico_id(self):
         return self.__medico_id
     
+    def set_id(self,id):
+        self.__id = id
     def set_nombre(self,nombre):
         self.__nombre = nombre
     def set_rut(self,rut):

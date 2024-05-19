@@ -1,7 +1,7 @@
 #Para que funcionen se deben importar los objetos asignados a cada funcion
 
 #Se crea la funcion Ingresar Paciente
-from db.operations import update_paciente, create_paciente, get_medico_by_name, get_paciente_by_rut
+from db.operations import get_medico_by_id, get_pacientes, update_paciente, create_paciente, get_medico_by_name, get_paciente_by_rut
 from models.paciente import Paciente
 
 def ingresar_paciente():
@@ -12,7 +12,7 @@ def ingresar_paciente():
     if paciente_found is not None:
         print("❌ El paciente ya existe en la base de datos")
         return paciente_found
-    paciente = Paciente(nombre, rut)
+    paciente = Paciente('',nombre,rut)
     create_paciente(paciente)
     print("✅ Paciente ingresado correctamente:", paciente.show())
     return paciente
@@ -46,13 +46,13 @@ def asignar_paciente_a_medico():
 #Se crea la funcion Diagnosticar enfermedad a un paciente
 #PENDIENTE
 
-#Se crea la funcion listar pacientes
-#PENDIENTE REVISAR Y CORREGIR 
-def listar_pacientes(lista_pacientes):
+def listar_pacientes():
     print("Listado de pacientes:")
-    for paciente in lista_pacientes:
-        print(f"Nombre: {paciente.nombre}")
-        print(f"Rut: {paciente.rut}")
-        print(f"Diagnostico: {paciente.diagnostico}")
-        print(f"Medico: {paciente.medico}")
-        print(f"Habitacion: {paciente.habitacion}")
+    pacientes = get_pacientes()
+    for paciente in pacientes:
+        medico = get_medico_by_id(paciente.get_medico_id())
+        medico_name = medico.get_nombre() if medico is not None else "Sin médico asignado"
+        print(f"Nombre: {paciente.get_nombre()}")
+        print(f"Rut: {paciente.get_rut()}")
+        print(f"Medico: {medico_name}")
+        print("")

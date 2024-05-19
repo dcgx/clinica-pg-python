@@ -27,6 +27,15 @@ def update_paciente(paciente):
             conn.commit()
     return paciente
 
+def get_pacientes():
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM pacientes"
+            )
+            pacientes = cursor.fetchall()
+    return [Paciente(p[0],p[1], p[2], p[3]) for p in pacientes]
+
 def get_paciente_by_rut(rut):
     with get_connection() as conn:
         with conn.cursor() as cursor:
@@ -36,9 +45,22 @@ def get_paciente_by_rut(rut):
             )
             paciente = cursor.fetchone()
     if paciente is not None:
-        return Paciente(paciente[1], paciente[2], paciente[3])
+        return Paciente(paciente[0],paciente[1], paciente[2], paciente[3])
     else:
         return None    
+    
+def get_medico_by_id(id_medico):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM medicos WHERE medico_id = %s",
+                (id_medico,)
+            )
+            medico = cursor.fetchone()
+    if medico is not None:
+        return Medico(medico[0], medico[1], medico[2])
+    else:
+        return None
 
 def get_medico_by_name(nombre_medico):
     with get_connection() as conn:

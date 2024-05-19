@@ -30,7 +30,7 @@ def mostrar_menu():
             # Lógica para diagnosticar enfermedad a un paciente
         elif opcion == 6:
             print("Seleccionaste: Listar Pacientes Clinicae")
-            # Lógica para listar pacientes
+            listar_pacientes()
         elif opcion == 0:
             print("Saliendo del programa...")
         else:
