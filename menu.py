@@ -32,7 +32,7 @@ def mostrar_menu():
             # Lógica para ordenar examen para un paciente
         elif opcion == 5:
             print("Seleccionaste: Cambiar paciente de cama")
-            # cambiar_paciente_de_cama()
+            cambiar_paciente_de_cama()
         elif opcion == 6:
             print("Seleccionaste: Cambiar médico de un paciente")
             cambiar_paciente_a_medico()

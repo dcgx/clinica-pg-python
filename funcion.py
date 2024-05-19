@@ -86,6 +86,24 @@ def cambiar_paciente_a_medico():
     print("✅ Paciente asignado a médico correctamente:", paciente.show())
     return paciente
 
+def cambiar_paciente_de_cama():
+    print("Cambiar paciente de cama")
+    rut = input("Ingrese el rut del paciente: ")
+    paciente = get_paciente_by_rut(rut)
+    if paciente is None:
+        print("❌ El paciente no existe en la base de datos. ")
+        return
+    
+    cama = input("Ingrese el número de cama: ")
+    cama_encontrada = get_cama_by_id(cama)
+    if cama_encontrada is None:
+        print("❌ La cama no existe en la base de datos")
+        return
+    paciente.set_cama_id(cama_encontrada.get_id())
+    update_paciente(paciente)
+    print("✅ Paciente se ha cambiado de cama correctamente:", paciente.show())
+    return paciente
+
 #Se crea la funcion Ordenar examen a paciente
 #PENDIENTE
 
