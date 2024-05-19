@@ -4,6 +4,10 @@ from db import config
 
 from db.connection import get_connection
 
+from models.cama import Cama
+from models.diagnostico import Diagnostico
+from models.examen import Examen
+from models.habitacion import Habitacion
 from models.medico import Medico
 from models.paciente import Paciente
 
@@ -76,65 +80,58 @@ def get_medico_by_name(nombre_medico):
     else:
         return None
 
+def get_examen_by_paciente_id(paciente_id):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM examenes WHERE paciente_id = %s",
+                (paciente_id,)
+            )
+            examen = cursor.fetchone()
+    if examen is not None:
+        return Examen(examen[0], examen[1], examen[2], examen[3])
 
-def ShowAllBook():
-    #establecemos la conexion
-    conexion = psy.connect(host=config.host,database=config.database,user=config.user,password=config.password)
-    #fin establecemos la conexion
-    select_all_book = conexion.cursor() #establecemos el cursor
-    select_all_book.execute("SELECT * FROM Libro")
-    if select_all_book.rowcount > 0:#rowcount cuenta la cantidad de filas.
-        row = select_all_book.fetchone() #Itera en el resultado, obtenidno los datos de la sigueinte fila
-        while row is not None:
-            print('\n**********************\n')
-            print(f'Nombre: {str(row[1])}\nAutor: {str(row[2])}\nGenero: {str(row[3])}\nPaginas: {str(row[4])}\nFormato: {str(row[5])}')
-            print('\n**********************\n')
-            row = select_all_book.fetchone()
-    else:
-        print('\n**********************\n')
-        print('No existen registros en la base de datos')
-    #cerramos la conexión
-    conexion.close()
-    #fin cerramos la conexión
+def get_last_examen_by_paciente_id(paciente_id):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM examenes WHERE paciente_id = %s ORDER BY fecha DESC LIMIT 1",
+                (paciente_id,)
+            )
+            examen = cursor.fetchone()
+    if examen is not None:
+        return Examen(examen[0], examen[1], examen[2], examen[3])   
 
-def ShowFilterBook(search):
-    #establecemos la conexion
-    conexion = psy.connect(host=config.host,database=config.database,user=config.user,password=config.password)
-    #fin establecemos la conexion
-    select_filter_book = conexion.cursor() #establecemos el cursor
-    select_filter_book.execute("SELECT * FROM Libro WHERE libro_genero = %s",(search,))
-    if select_filter_book.rowcount > 0:#rowcount cuenta la cantidad de filas.
-        row = select_filter_book.fetchone() #Itera en el resultado, obtenidno los datos de la sigueinte fila
-        while row is not None:
-            print('\n**********************\n')
-            print(f'Nombre: {str(row[1])}\nAutor: {str(row[2])}\nGenero: {str(row[3])}\nPaginas: {str(row[4])}\nFormato: {str(row[5])}')
-            print('\n**********************\n')
-            row = select_filter_book.fetchone()
-    else:
-        print('\n**********************\n')
-        print('No existen registros en la base de datos')
-    #cerramos la conexión
-    conexion.close()
-    #fin cerramos la conexión
+def get_diagnostico_by_examen_id(examen_id):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM diagnosticos WHERE examen_id = %s",
+                (examen_id,)
+            )
+            diagnostico = cursor.fetchone()
+    if diagnostico is not None:
+        return Diagnostico(diagnostico[0], diagnostico[1])    
+
+def get_habitacion_by_paciente_id(paciente_id):
+    cama = get_cama_by_paciente_id(paciente_id)
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM habitaciones WHERE habitacion_id = %s",
+                (cama.get_habitacion_id(),)
+            )
+            habitacion = cursor.fetchone()
+    if habitacion is not None:
+        return Habitacion(habitacion[0], habitacion[1], habitacion[2])
     
-def ShowByAutor(search):
-    #establecemos la conexion
-    conexion = psy.connect(host=config.host,database=config.database,user=config.user,password=config.password)
-    #fin establecemos la conexion
-    select_filter_book = conexion.cursor() #establecemos el cursor
-    select_filter_book.execute("SELECT * FROM Libro WHERE lower(libro_autor) like %s", ('%' + search + '%',))
-
-    if select_filter_book.rowcount > 0:#rowcount cuenta la cantidad de filas.
-        row = select_filter_book.fetchone() #Itera en el resultado, obtenidno los datos de la sigueinte fila
-        while row is not None:
-            print('\n**********************\n')
-            print(f'Nombre: {str(row[1])}\nAutor: {str(row[2])}\nGenero: {str(row[3])}\nPaginas: {str(row[4])}\nFormato: {str(row[5])}')
-            print('\n**********************\n')
-            row = select_filter_book.fetchone()
-    else:
-        print('\n**********************\n')
-        print(f"Sin Resultados.\n")
-    #cerramos la conexión
-    conexion.close()
-    return select_filter_book.rowcount
-    #fin cerramos la conexión    
+def get_cama_by_paciente_id(paciente_id):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM camas WHERE paciente_id = %s",
+                (paciente_id,)
+            )
+            cama = cursor.fetchone()
+    if cama is not None:
+        return Cama(cama[0], cama[1], cama[2], cama[3])

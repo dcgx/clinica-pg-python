@@ -1,3 +1,6 @@
+from db.operations import get_cama_by_paciente_id, get_habitacion_by_paciente_id
+
+
 class Paciente:
     def __init__(self,id='',nombre='',rut='', medico_id=None):
         self.__id = id
@@ -13,6 +16,14 @@ class Paciente:
         return self.__rut
     def get_medico_id(self):
         return self.__medico_id
+
+    def get_habitacion(self):
+        habitacion = get_habitacion_by_paciente_id(self.get_id())
+        return habitacion.get_numero() if habitacion is not None else "Sin habitacion asignada"
+
+    def get_cama(self):
+        cama = get_cama_by_paciente_id(self.get_id())
+        return cama.get_id() if cama is not None else "Sin cama asignada"
     
     def set_id(self,id):
         self.__id = id

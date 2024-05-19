@@ -29,6 +29,7 @@ CREATE TABLE diagnosticos (
 
 CREATE TABLE habitaciones (
     habitacion_id SERIAL PRIMARY KEY,
+    paciente_id INT REFERENCES pacientes(paciente_id),
     numero INT NOT NULL
 );
 

@@ -1,23 +1,22 @@
 #Se crea la clase examen con sus respectivos atributos
 #Se sugieren los siguientes metodos o funciones:
 class Examen:
-    def __init__(self,tipo='',resultado=''):
+    def __init__(self,id='', tipo='',resultado='',paciente_id=''):
+        self.__id = id
         self.__tipo = tipo
         self.__resultado = resultado
+        self.__paciente_id = paciente_id
 
-
-#Get se utiliza para obtener el valor de un atributo privado de una clase. Proporciona acceso de solo lectura a ese atributo. 
-#Esto significa que puedes obtener su valor desde fuera de la clase, pero no puedes modificarlo directamente.        
-    def GetTipo(self):
+    def get_id(self):
+        return self.__id
+    def get_tipo(self):
         return self.__tipo
-    def GetResultado(self):
+    def get_resultado(self):
         return self.__resultado
 
-
-#Set se utiliza para modificar el valor de un atributo privado de una clase. Proporciona acceso de solo escritura a ese atributo. 
-#Esto significa que puedes establecer su valor desde fuera de la clase, pero no puedes acceder a él directamente.    
-    
-    def SetTipo(self,tipo):
+    def set_id(self,id):
+        self.__id = id    
+    def set_tipo(self,tipo):
         self.__tipo = tipo
-    def SetResultado(self,resultado):
-        self.__resultado = resultado   
+    def set_resultado(self,resultado):
+        self.__resultado = resultado
