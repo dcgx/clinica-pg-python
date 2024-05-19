@@ -102,6 +102,24 @@ def cambiar_paciente_de_cama():
     print("✅ Paciente se ha cambiado de cama correctamente:", paciente.show())
     return paciente
 
+def diagnosticar_enfermedad_a_paciente():
+    print("Diagnosticar enfermedad a un paciente")
+    rut = input("Ingrese el rut del paciente: ")
+    paciente = get_paciente_by_rut(rut)
+    if paciente is None:
+        print("❌ El paciente no existe en la base de datos. ")
+        return
+    enfermedad = input("Ingrese la enfermedad: ")
+    resultado = input("Ingrese el resultado del examen: ")
+    tipo = input("Ingrese el tipo de examen: ")
+    examen = Examen('',resultado,tipo,paciente.get_id())
+    create_examen(examen)
+    diagnostico = Diagnostico('',enfermedad,examen.get_id())
+    diagnostico.set_examen_id(examen.get_id())
+    create_diagnostico(diagnostico)
+    print("✅ Diagnóstico realizado correctamente:", diagnostico.show())
+    return diagnostico
+
 def listar_pacientes():
     print("Listado de pacientes:")
     pacientes = get_pacientes()

@@ -13,6 +13,8 @@ class Examen:
         return self.__tipo
     def get_resultado(self):
         return self.__resultado
+    def get_paciente_id(self):
+        return self.__paciente_id
 
     def set_id(self,id):
         self.__id = id    

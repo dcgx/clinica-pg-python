@@ -38,7 +38,7 @@ def mostrar_menu():
             cambiar_paciente_a_medico()
         elif opcion == 7:
             print("Seleccionaste: Diagnosticar enfermedad a un paciente")
-            # diagnosticar_enfermedad_a_paciente()
+            diagnosticar_enfermedad_a_paciente()
         elif opcion == 8:
             print("Seleccionaste: Listar Pacientes Clinica")
             listar_pacientes()

@@ -154,3 +154,38 @@ def get_cama_by_paciente_id(paciente_id):
             cama = cursor.fetchone()
     if cama is not None:
         return Cama(cama[0], cama[1], cama[2], cama[3])
+
+def create_examen(examen: Examen):
+    examen_id = None
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO examenes (resultado, tipo, paciente_id) VALUES (%s, %s, %s)",
+                (examen.get_resultado(), examen.get_tipo(), examen.get_paciente_id())
+            )
+            conn.commit()
+    last_examen = get_last_examen()
+    if last_examen is not None:
+        examen_id = last_examen.get_id()
+    examen.set_id(examen_id)
+    return examen
+
+def get_last_examen():
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM examenes ORDER BY fecha DESC LIMIT 1"
+            )
+            examen = cursor.fetchone()
+    if examen is not None:
+        return Examen(examen[0], examen[1], examen[2], examen[3])
+
+def create_diagnostico(diagnostico: Diagnostico):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO diagnosticos (enfermedad, examen_id) VALUES (%s, %s)",
+                (diagnostico.get_enfermedad(), diagnostico.get_examen_id())
+            )
+            conn.commit()
+    return diagnostico
