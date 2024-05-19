@@ -10,3 +10,6 @@ class Habitacion:
         return self.__id
     def set_numero(self,numero):
         self.__numero = numero
+
+    def show(self):
+        return f"Habitación: {self.__numero}"

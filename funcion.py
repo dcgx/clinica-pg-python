@@ -48,8 +48,6 @@ def mostrar_paciente():
     
     return paciente
 
-
-#Se crea la funcion Asignar paciente a Medico
 def asignar_paciente_a_medico():
     print("Asignar paciente a médico")
     rut = input("Ingrese el rut del paciente: ")
@@ -104,15 +102,6 @@ def cambiar_paciente_de_cama():
     print("✅ Paciente se ha cambiado de cama correctamente:", paciente.show())
     return paciente
 
-#Se crea la funcion Ordenar examen a paciente
-#PENDIENTE
-
-#Se crea la funcion Cambiar Medico a un paciente
-#PENDIENTE
-
-#Se crea la funcion Diagnosticar enfermedad a un paciente
-#PENDIENTE
-
 def listar_pacientes():
     print("Listado de pacientes:")
     pacientes = get_pacientes()
@@ -123,3 +112,41 @@ def listar_pacientes():
         print(f"Rut: {paciente.get_rut()}")
         print(f"Medico: {medico_name}")
         print("")
+
+def crear_cama():
+    print("Crear cama")
+    numero_habitacion = input("Ingrese el número de habitación: ")
+    habitacion = get_habitacion_by_numero(numero_habitacion)
+    if habitacion is None:
+        print("❌ La habitación no existe en la base de datos")
+        return
+    cama = Cama('',None,habitacion.get_id(),True)
+    create_cama(cama)
+    print("✅ Cama creada correctamente:", cama.show())
+    return cama
+
+def crear_habitacion():
+    print("Crear habitación")
+    numero = input("Ingrese el número de habitación: ")
+    habitacion_por_numero = get_habitacion_by_numero(numero)
+    if habitacion_por_numero is not None:
+        print("❌ La habitación ya existe en la base de datos")
+        return habitacion_por_numero
+    
+    habitacion = Habitacion('',numero)
+    create_habitacion(habitacion)
+    print("✅ Habitación creada correctamente:", habitacion.show())
+    return habitacion
+
+def get_habitacion_by_numero(numero):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM habitaciones WHERE numero = %s",
+                (numero,)
+            )
+            habitacion = cursor.fetchone()
+    if habitacion is not None:
+        return Habitacion(habitacion[0],habitacion[1])
+    else:
+        return None

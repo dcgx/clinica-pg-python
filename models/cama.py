@@ -22,3 +22,6 @@ class Cama:
         self.__paciente_id = paciente_id
     def set_habitacion_id(self,habitacion_id):
         self.__habitacion_id = habitacion_id
+
+    def show(self):
+        return f"Cama: {self.__id}, Habilitada: {self.__habilitada}, Paciente: {self.__paciente_id}, Habitación: {self.__habitacion_id}"

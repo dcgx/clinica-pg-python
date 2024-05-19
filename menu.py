@@ -47,10 +47,10 @@ def mostrar_menu():
             # listar_medicos()
         elif opcion == 10:
             print("Seleccionaste: Crear cama")
-            # crear_cama()
+            crear_cama()
         elif opcion == 11:
             print("Seleccionaste: Crear habitacion")
-            # crear_habitacion()
+            crear_habitacion()
         elif opcion == 0:
             print("Saliendo del programa...")
         else:

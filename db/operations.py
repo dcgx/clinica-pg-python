@@ -112,6 +112,16 @@ def get_diagnostico_by_examen_id(examen_id):
     if diagnostico is not None:
         return Diagnostico(diagnostico[0], diagnostico[1])    
 
+def create_habitacion(habitacion: Habitacion):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO habitaciones (numero) VALUES (%s)",
+                (habitacion.get_numero(),)
+            )
+            conn.commit()
+    return habitacion
+
 def get_habitacion_by_paciente_id(paciente_id):
     cama = get_cama_by_paciente_id(paciente_id)
     with get_connection() as conn:
@@ -123,7 +133,17 @@ def get_habitacion_by_paciente_id(paciente_id):
             habitacion = cursor.fetchone()
     if habitacion is not None:
         return Habitacion(habitacion[0], habitacion[1])
-    
+
+def create_cama(cama: Cama):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO camas (paciente_id, habitacion_id, habilitada) VALUES (%s, %s, %s)",
+                (cama.get_paciente_id(), cama.get_habitacion_id(), cama.get_habilitada())
+            )
+            conn.commit()
+    return cama
+
 def get_cama_by_paciente_id(paciente_id):
     with get_connection() as conn:
         with conn.cursor() as cursor:
