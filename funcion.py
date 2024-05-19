@@ -131,6 +131,13 @@ def listar_pacientes():
         print(f"Medico: {medico_name}")
         print("")
 
+def listar_medicos():
+    print("Listado de médicos:")
+    medicos = get_medicos()
+    for medico in medicos:
+        print(f"Nombre: {medico.get_nombre()}")
+        print(f"Especialidad: {medico.get_especialidad()}")
+
 def crear_cama():
     print("Crear cama")
     numero_habitacion = input("Ingrese el número de habitación: ")

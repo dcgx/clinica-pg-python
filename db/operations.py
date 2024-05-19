@@ -53,6 +53,15 @@ def get_paciente_by_rut(rut):
     else:
         return None    
     
+def get_medicos():
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM medicos"
+            )
+            medicos = cursor.fetchall()
+    return [Medico(m[0],m[1], m[2]) for m in medicos]
+
 def get_medico_by_id(id_medico):
     with get_connection() as conn:
         with conn.cursor() as cursor:

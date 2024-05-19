@@ -44,7 +44,7 @@ def mostrar_menu():
             listar_pacientes()
         elif opcion == 9:
             print("Seleccionaste: Listar Medicos Clinica")
-            # listar_medicos()
+            listar_medicos()
         elif opcion == 10:
             print("Seleccionaste: Crear cama")
             crear_cama()
