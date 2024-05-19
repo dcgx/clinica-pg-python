@@ -1,8 +1,7 @@
 
 from funcion import *
 
-
-def menu():
+def mostrar_menu():
     opcion = None
     while opcion != 0:
         print("Menú:")
@@ -15,7 +14,6 @@ def menu():
         print("0. Salir")
         opcion = int(input("Seleccione una opción: "))
         if opcion == 1:
-            print("Seleccionaste: Ingresar un nuevo paciente")
             ingresar_paciente()
             # Lógica para ingresar un nuevo paciente
         elif opcion == 2:
@@ -38,4 +36,6 @@ def menu():
         else:
             print("Opción no válida. Por favor, seleccione una opción válida.")
 
-menu()
+
+if __name__ == "__main__":
+    mostrar_menu()

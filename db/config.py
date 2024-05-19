@@ -1,5 +1,5 @@
 #Estos datos son ejemplo de lo visto en clases, hay que modificar
 host = "localhost"
-database = "Diplomado_model01"
+database = "clinica_db"
 user = "postgres"
-password = "BNX66K312031"
+password = "123456"
